@@ -13,6 +13,8 @@ import { useStore } from '../context/StoreContext'
 import Badge from '../components/Badge'
 import ProductListScreen from '../pages/ProductListScreen'
 import HeaderCart from '../components/HeaderCart'
+import CheckoutScreen from '../pages/CheckoutScreen'
+import SuccessScreen from '../pages/SuccessScreen'
 
 const Stack = createStackNavigator<RootStackParamList>()
 
@@ -71,6 +73,30 @@ const Navigation = () => {
 					component={CartScreen}
 					options={{
 						title: "Cart",
+						headerStyle: {
+							backgroundColor: Colors.LightBlue
+						},
+						headerTintColor: '#fff',
+					}}
+				/>
+
+				<Stack.Screen
+					name={Pages.Checkout}
+					component={CheckoutScreen}
+					options={{
+						title: "Checkout",
+						headerStyle: {
+							backgroundColor: Colors.LightBlue
+						},
+						headerTintColor: '#fff',
+					}}
+				/>
+
+				<Stack.Screen
+					name={Pages.Success}
+					component={SuccessScreen}
+					options={{
+						title: "Order",
 						headerStyle: {
 							backgroundColor: Colors.LightBlue
 						},

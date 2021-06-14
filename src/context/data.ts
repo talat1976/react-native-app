@@ -1,8 +1,15 @@
 import { Category } from '../models/Category';
+import { Coupon } from '../models/Coupon';
 import { Product } from '../models/Product';
 import { Review } from '../models/Review';
 import { IMAGES } from './../tools/images';
 import { CategoryType } from './../tools/types';
+
+export const COUPONS: Coupon[] = [
+	new Coupon("1", "11111", 15),
+	new Coupon("2", "22222", 25),
+	new Coupon("3", "33333", 30)
+]
 
 export const CATEGORIES: Category[] = [
 	new Category(CategoryType.Tshirts, IMAGES.tshirt1),

@@ -19,7 +19,7 @@ const ProductDetailScreen: FC<Props> = (props) => {
 	const total = useMemo(() => product!.price + product!.shipping, [product])
 
 	const onAddToCart = () => {
-		dispatch({ type: ActionTypes.addToCart, productId: product!.id })
+		dispatch({ type: ActionTypes.addToCart, product: product! })
 	}
 
 	return (
@@ -50,17 +50,12 @@ const ProductDetailScreen: FC<Props> = (props) => {
 
 				<Text style={styles.reviewsTitle}>Reviews</Text>
 
-				<FlatList
-               style={styles.reviewsTitle}
-               data={product?.reviews}
-               renderItem={({ item }) =>
-						<View style={styles.reviewItem}>
-							<Text style={styles.reviewItemName}>{item.name}</Text>
-							<Text style={styles.reviewItemText}>{item.text}</Text>
-						</View>
-					}
-               keyExtractor={review => review.id}
-            />
+				{product?.reviews.map(review =>
+					<View key={review.id} style={styles.reviewItem}>
+						<Text style={styles.reviewItemName}>{review.name}</Text>
+						<Text style={styles.reviewItemText}>{review.text}</Text>
+					</View>
+				)}
 			</View>
 		</ScrollView>
 	)

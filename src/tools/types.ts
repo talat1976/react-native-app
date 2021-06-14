@@ -1,10 +1,10 @@
-import { Product } from "../models/Product"
-
 export enum Pages {
 	Home = "Home",
 	ProductList = "ProductList",
 	ProductDetail = "ProductDetail",
-	Cart = "Cart"
+	Cart = "Cart",
+	Checkout = "Checkout",
+	Success = "Success",
 }
 
 export enum CategoryType {
@@ -21,10 +21,6 @@ export type RootStackParamList = {
 	[Pages.ProductList]: { type: CategoryType, title: string }
 	[Pages.ProductDetail]: { productId: string, productName: string }
 	[Pages.Cart]: undefined
-}
-
-export type Cart = {
-	productId: string
-	product?: Product,
-	qty: number
+	[Pages.Checkout]: undefined
+	[Pages.Success]: undefined
 }

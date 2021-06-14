@@ -1,51 +1,54 @@
 import { StackScreenProps } from '@react-navigation/stack'
-import React, { FC, useMemo } from 'react'
-import { FlatList, Image, ListRenderItem, StyleSheet, Text, View, TextInput } from 'react-native'
+import React, { FC, useState } from 'react'
+import { Image, StyleSheet, Text, View, ScrollView } from 'react-native'
 import Button from '../components/Button'
-import { useStore } from '../context/StoreContext'
-import { Cart, Pages, RootStackParamList } from '../tools/types'
+import { ActionTypes, useStore } from '../context/StoreContext'
+import { Pages, RootStackParamList } from '../tools/types'
 import { FontAwesome5 } from '@expo/vector-icons'
+import CouponView from '../components/CouponView'
+import Separator from '../components/Separator'
+import { COUPONS } from '../context/data'
+import { Colors } from '../tools/colors'
 
 type Props = StackScreenProps<RootStackParamList, Pages.Cart>
 
 const CartScreen: FC<Props> = (props) => {
-	const { selector } = useStore()
+	const { navigation } = props
 
-	const cartItems = useMemo(() => selector.getCartItems(), [])
-
-	const total = useMemo(() => cartItems.reduce((total: number, c: Cart) => {
-		return total + (c.product!.price + c.product!.shipping)
-	}, 0), [])
+	const { state, selector, dispatch } = useStore()
 
 	const onCheckout = () => {
-
+		navigation.navigate(Pages.Checkout)
 	}
 
-	const renderItem: ListRenderItem<Cart> = ({ item }) => (
-		<View style={styles.item}>
-			<Image style={styles.itemImg} source={item.product?.image} />
-			<View style={styles.itemDetails}>
-				<Text style={styles.itemText}>{item.product?.title}</Text>
-				<Text style={styles.itemPrice}>${item.product?.price}</Text>
-			</View>
-		</View>
-	)
+	const onApplyCoupon = (couponNumber: string) => {
+		const coupon = COUPONS.find(c => c.num === couponNumber)
+
+		if(coupon) {
+			dispatch({ type: ActionTypes.applyCoupon, coupon })
+		}
+	}
 
 	return (
-		<View style={styles.container}>
-			<FlatList
-				data={cartItems}
-				renderItem={renderItem}
-				keyExtractor={p => p.productId}
-			/>
+		<ScrollView style={styles.container}>
+			{state.cart.map(product =>
+				<View style={styles.item} key={product.id}>
+					<Image style={styles.itemImg} source={product.image} />
+					<View style={styles.itemDetails}>
+						<Text style={styles.itemText}>{product.title}</Text>
+						<View style={{ alignItems: "flex-end" }}>
+							<Text style={styles.itemPrice}>Net price: ${product.price}</Text>
+							<Text style={styles.itemPriceWithShipping}>${product.price + product.shipping}</Text>
+						</View>
+					</View>
+				</View>
+			)}
 
-			<Text style={styles.total}>Total: ${total}</Text>
+			<CouponView onApply={onApplyCoupon} />
 
-			<View>
-				<Text>Add Coupon</Text>
-				<TextInput />
-				<Button title="Apply" center />
-			</View>
+			<Separator />
+
+			<Text style={styles.total}>Total: ${selector.getTotalPrice()}</Text>
 
 			<Button
 				title="Checkout"
@@ -53,7 +56,7 @@ const CartScreen: FC<Props> = (props) => {
 				center
 				leading={<FontAwesome5 name="money-check" size={16} color="#fff" />}
 			/>
-		</View>
+		</ScrollView>
 	)
 }
 
@@ -82,7 +85,13 @@ const styles = StyleSheet.create({
 		fontWeight: "bold"
 	},
 	itemPrice: {
-		fontSize: 18
+		fontSize: 16,
+		color: Colors.DarkGray
+	},
+	itemPriceWithShipping: {
+		fontSize: 18,
+		color: Colors.DarkBlue,
+		fontWeight: "bold"
 	},
 	itemImg: {
 		height: 40,

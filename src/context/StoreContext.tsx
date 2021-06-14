@@ -1,28 +1,33 @@
 import React, { useContext, useReducer } from "react"
 import { FC } from "react"
 import { Category } from "../models/Category"
+import { Coupon } from "../models/Coupon"
 import { Product } from "../models/Product"
-import { Cart, CategoryType } from "../tools/types"
+import { CategoryType } from "../tools/types"
 import { CATEGORIES, PRODUCTS } from "./data"
 
 export enum ActionTypes {
-	addToCart = "addToCart"
+	addToCart = "addToCart",
+	applyCoupon = "applyCoupon"
 }
 
 type State = {
 	categories: Category[]
 	products: Product[],
-	cart: Cart[]
+	cart: Product[],
+	totalPrice: number
+	coupon: Coupon | null
 }
 
 type Action =
-	| { type: ActionTypes.addToCart, productId: string }
+	| { type: ActionTypes.addToCart, product: Product }
+	| { type: ActionTypes.applyCoupon, coupon: Coupon }
 
 type Selector = {
 	getProductsByCategory: (type: CategoryType) => Product[]
 	getProductById: (productId: string) => (Product | null)
 	getProductsCount: (type: CategoryType) => number
-	getCartItems: () => Cart[]
+	getTotalPrice: () => number
 }
 
 type ContextStore = {
@@ -41,20 +46,29 @@ export const StoreProvider: FC = (props) => {
 	const initState: State = {
 		categories: CATEGORIES,
 		products: PRODUCTS,
-		cart: []
+		cart: [],
+		totalPrice: 0,
+		coupon: null
 	}
 
 	const [state, dispatch] = useReducer<Reducer<State, Action>>((state: State, action: Action) => {
 		switch (action.type) {
 			case ActionTypes.addToCart: {
-
-				const item = state.cart.find(c => c.productId === action.productId)
+				const item = state.cart.find(p => p.id === action.product.id)
 
 				if (item) {
 					return state
 				}
 
-				return { ...state, cart: [...state.cart, { productId: action.productId, qty: 1 }] }
+				return {
+					...state,
+					cart: [...state.cart, action.product],
+					totalPrice: state.totalPrice + (action.product.price + action.product.shipping)
+				}
+			}
+
+			case ActionTypes.applyCoupon: {
+				return { ...state, coupon: action.coupon }
 			}
 
 			default:
@@ -70,14 +84,15 @@ export const StoreProvider: FC = (props) => {
 			const product = state.products.find(p => p.id === productId)
 			return product ? product : null
 		},
-		getCartItems: () => {
-			return state.cart.map(c => {
-				const product = state.products.find(p => p.id === c.productId)
-				return { ...c, product }
-			})
-		},
 		getProductsCount: (type: CategoryType) => {
 			return state.products.filter(p => p.category === type).length
+		},
+		getTotalPrice: () => {
+			if(state.coupon === null) {
+				return state.totalPrice
+			}
+
+			return state.totalPrice - state.coupon.discount
 		}
 	}
 
