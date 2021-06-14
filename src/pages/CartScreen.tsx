@@ -1,6 +1,6 @@
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { FC, useMemo } from 'react'
-import { FlatList, Image, ListRenderItem, StyleSheet, Text, View } from 'react-native'
+import { FlatList, Image, ListRenderItem, StyleSheet, Text, View, TextInput } from 'react-native'
 import Button from '../components/Button'
 import { useStore } from '../context/StoreContext'
 import { Cart, Pages, RootStackParamList } from '../tools/types'
@@ -14,7 +14,7 @@ const CartScreen: FC<Props> = (props) => {
 	const cartItems = useMemo(() => selector.getCartItems(), [])
 
 	const total = useMemo(() => cartItems.reduce((total: number, c: Cart) => {
-		return total + (c.qty * c.product!.price)
+		return total + (c.product!.price + c.product!.shipping)
 	}, 0), [])
 
 	const onCheckout = () => {
@@ -23,12 +23,11 @@ const CartScreen: FC<Props> = (props) => {
 
 	const renderItem: ListRenderItem<Cart> = ({ item }) => (
 		<View style={styles.item}>
-			<Image style={styles.itemImg} source={{ uri: item.product?.image }} />
+			<Image style={styles.itemImg} source={item.product?.image} />
 			<View style={styles.itemDetails}>
 				<Text style={styles.itemText}>{item.product?.title}</Text>
 				<Text style={styles.itemPrice}>${item.product?.price}</Text>
 			</View>
-			<Text style={styles.itemQty}>x{item.qty}</Text>
 		</View>
 	)
 
@@ -41,6 +40,12 @@ const CartScreen: FC<Props> = (props) => {
 			/>
 
 			<Text style={styles.total}>Total: ${total}</Text>
+
+			<View>
+				<Text>Add Coupon</Text>
+				<TextInput />
+				<Button title="Apply" center />
+			</View>
 
 			<Button
 				title="Checkout"

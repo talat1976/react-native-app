@@ -13,7 +13,7 @@ const CategoryView: FC<Props> = (props) => {
     return (
         <View style={styles.container}>
             <TouchableOpacity style={styles.item} onPress={onPress}>
-                <Image style={styles.image} source={{ uri: category.image }} />
+                <Image style={styles.image} source={category.image} />
                 <Text style={styles.text}>{category.name}</Text>
             </TouchableOpacity>
         </View>

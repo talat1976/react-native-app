@@ -12,6 +12,7 @@ import CartScreen from '../pages/CartScreen'
 import { useStore } from '../context/StoreContext'
 import Badge from '../components/Badge'
 import ProductListScreen from '../pages/ProductListScreen'
+import HeaderCart from '../components/HeaderCart'
 
 const Stack = createStackNavigator<RootStackParamList>()
 
@@ -39,7 +40,7 @@ const Navigation = () => {
 				<Stack.Screen
 					name={Pages.ProductList}
 					component={ProductListScreen}
-					options={({ navigation }) => ({
+					options={({ navigation, route }) => ({
 						headerStyle: {
 							backgroundColor: Colors.LightBlue
 						},
@@ -47,20 +48,22 @@ const Navigation = () => {
 						headerTitleStyle: {
 							fontWeight: 'bold',
 						},
-						title: "List",
-						headerRight: () => (
-							<TouchableOpacity onPress={() => navigation.navigate(Pages.Cart)}>
-								{state.cart.length > 0 && <Badge value={state.cart.length} />}
-								<FontAwesome5 name="shopping-cart" size={18} color="#fff" style={{ marginRight: 10 }} />
-							</TouchableOpacity>
-						)
+						title: route.params.title,
+						headerRight: () => <HeaderCart />
 					})}
 				/>
 
 				<Stack.Screen
 					name={Pages.ProductDetail}
 					component={ProductDetailScreen}
-					options={({ route }) => ({ title: route.params.productName })}
+					options={({ route }) => ({
+						title: route.params.productName,
+						headerStyle: {
+							backgroundColor: Colors.LightBlue
+						},
+						headerTintColor: '#fff',
+						headerRight: () => <HeaderCart />
+					})}
 				/>
 
 				<Stack.Screen

@@ -1,9 +1,10 @@
+import { CategoryType } from "../tools/types"
 
 export class Category {
-    name: string = ""
-    image: string = ""
+    name: CategoryType
+    image: any
 
-    constructor(name: string, image: string) {
+    constructor(name: CategoryType, image: any) {
         this.name = name
         this.image = image
     }

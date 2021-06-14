@@ -1,46 +1,68 @@
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { FC, useMemo } from 'react'
-import { View, Text, StyleSheet, Image } from 'react-native'
+import { View, Text, StyleSheet, Image, FlatList, ScrollView } from 'react-native'
 import Button from '../components/Button'
-import { useStore } from '../context/StoreContext'
+import { ActionTypes, useStore } from '../context/StoreContext'
 import { Pages, RootStackParamList } from '../tools/types'
-import { Feather } from '@expo/vector-icons'
+import { FontAwesome5 } from '@expo/vector-icons'
 import Detail from '../components/Detail'
 import { Colors } from '../tools/colors'
-import { MaterialCommunityIcons } from '@expo/vector-icons'
+import Separator from '../components/Separator'
 
 type Props = StackScreenProps<RootStackParamList, Pages.ProductDetail>
 
 const ProductDetailScreen: FC<Props> = (props) => {
 	const { route } = props
-	const { selector } = useStore()
+	const { selector, dispatch } = useStore()
 
-	const product = useMemo(() => selector.getProductById(route.params.productId), [])
+	const product = useMemo(() => selector.getProductById(route.params.productId), [route.params.productId])
+	const total = useMemo(() => product!.price + product!.shipping, [product])
 
-	const onBuy = () => {
-
+	const onAddToCart = () => {
+		dispatch({ type: ActionTypes.addToCart, productId: product!.id })
 	}
 
 	return (
-		<View style={styles.container}>
-			<Image style={styles.image} source={{ uri: product?.image }} />
+		<ScrollView style={styles.container}>
+			<Image style={styles.image} source={product?.image} />
 			<View style={styles.content}>
 				<Text style={styles.title}>{product?.title}</Text>
 
+				<Text style={styles.description}>{product?.description}</Text>
+
 				<View style={styles.detailContainer}>
 					<Detail value={`$${product?.price}`} title="Price" />
-					<Detail value={`${product?.qty}+`} title="Quantity" />
-					<Detail value={product && <MaterialCommunityIcons name={product.icon as any} size={24} color="black" />} title="Category" />
+					<Detail value={`$${product?.shipping}`} title="Shipping" />
+					<Detail value={product?.measure} title="Measure" />
+					<Detail value={product?.qty} title="Quantity" />
 				</View>
 
+				<Text style={styles.total}>Total: ${total}</Text>
+
 				<Button
-					title="Buy"
-					onPress={onBuy}
-					leading={<Feather name="shopping-bag" size={18} color="#fff" />}
+					title="Add To Cart"
+					onPress={onAddToCart}
+					leading={<FontAwesome5 name="shopping-cart" size={18} color="#fff"/>}
 					center
 				/>
+
+				<Separator />
+
+				<Text style={styles.reviewsTitle}>Reviews</Text>
+
+				<FlatList
+               style={styles.reviewsTitle}
+               data={product?.reviews}
+               renderItem={({ item }) =>
+						<View style={styles.reviewItem}>
+							<Text style={styles.reviewItemName}>{item.name}</Text>
+							<Text style={styles.reviewItemText}>{item.text}</Text>
+						</View>
+					}
+               keyExtractor={review => review.id}
+            />
 			</View>
-		</View>
+		</ScrollView>
 	)
 }
 
@@ -58,13 +80,46 @@ const styles = StyleSheet.create({
 	title: {
 		fontSize: 30,
 		fontWeight: "bold",
-		marginBottom: 15,
+		marginBottom: 10,
+		color: Colors.DarkBlue
+	},
+	description: {
+		fontSize: 18,
+		marginBottom: 10,
 		color: Colors.DarkBlue
 	},
 	detailContainer: {
 		flexDirection: "row",
 		justifyContent: "space-between",
 		marginBottom: 10
+	},
+	total: {
+		fontSize: 22,
+		fontWeight: "bold",
+		marginBottom: 10,
+		color: Colors.DarkBlue
+	},
+	reviewsTitle: {
+		fontSize: 22,
+		fontWeight: "bold",
+		marginBottom: 10,
+		color: Colors.DarkBlue,
+	},
+	reviewsList: {
+		flex: 1
+	},
+	reviewItem: {
+		flex: 1,
+		marginBottom: 10
+	},
+	reviewItemName: {
+		color: Colors.DarkBlue,
+		fontSize: 16,
+		fontWeight: "bold",
+	},
+	reviewItemText: {
+		color: Colors.DarkGray,
+		fontSize: 18,
 	}
 })
 
