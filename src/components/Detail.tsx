@@ -1,6 +1,7 @@
 import React, { FC } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { Colors } from '../tools/colors'
+import { Fonts } from '../tools/fonts'
 
 type Props = {
 	title: string
@@ -22,17 +23,17 @@ export default Detail
 
 const styles = StyleSheet.create({
 	container: {
-		// backgroundColor: "red"
 		marginBottom: 15,
 		alignItems: "center"
 	},
 	value: {
 		fontSize: 20,
-		fontWeight: "bold",
+		fontFamily: Fonts.SemiBold,
 		color: Colors.DarkBlue
 	},
 	title: {
-		fontSize: 15,
+		fontSize: 14,
+		fontFamily: Fonts.Medium,
 		color: "#777"
 	}
 })

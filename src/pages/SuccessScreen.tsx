@@ -5,6 +5,7 @@ import { AntDesign } from '@expo/vector-icons'
 import Button from '../components/Button'
 import { StackScreenProps } from '@react-navigation/stack'
 import { Pages, RootStackParamList } from '../tools/types'
+import { Fonts } from '../tools/fonts'
 
 type Props = StackScreenProps<RootStackParamList, Pages.Success>
 
@@ -38,14 +39,14 @@ const styles = StyleSheet.create({
 	},
 	thank: {
 		fontSize: 40,
-		fontWeight: "bold",
 		color: Colors.Blue,
-		marginTop: 10
+		marginTop: 10,
+		fontFamily: Fonts.Bold,
 	},
 	text: {
 		fontSize: 25,
 		color: Colors.DarkBlue,
-		fontWeight: "bold",
-		marginBottom: 50
+		marginBottom: 50,
+		fontFamily: Fonts.SemiBold,
 	}
 })

@@ -15,12 +15,11 @@ import ProductListScreen from '../pages/ProductListScreen'
 import HeaderCart from '../components/HeaderCart'
 import CheckoutScreen from '../pages/CheckoutScreen'
 import SuccessScreen from '../pages/SuccessScreen'
+import { Fonts } from '../tools/fonts'
 
 const Stack = createStackNavigator<RootStackParamList>()
 
 const Navigation = () => {
-	const { state } = useStore()
-
 	return (
 		<NavigationContainer>
 			<Stack.Navigator initialRouteName={Pages.Home}>
@@ -29,11 +28,11 @@ const Navigation = () => {
 					component={HomeScreen}
 					options={{
 						headerStyle: {
-							backgroundColor: Colors.LightBlue
+							backgroundColor: Colors.LightBlue,
 						},
 						headerTintColor: '#fff',
 						headerTitleStyle: {
-							fontWeight: 'bold',
+							fontFamily: Fonts.Bold
 						},
 						title: "Shopify",
 					}}
@@ -42,13 +41,13 @@ const Navigation = () => {
 				<Stack.Screen
 					name={Pages.ProductList}
 					component={ProductListScreen}
-					options={({ navigation, route }) => ({
+					options={({ route }) => ({
 						headerStyle: {
 							backgroundColor: Colors.LightBlue
 						},
 						headerTintColor: '#fff',
 						headerTitleStyle: {
-							fontWeight: 'bold',
+							fontFamily: Fonts.Bold
 						},
 						title: route.params.title,
 						headerRight: () => <HeaderCart />
@@ -64,6 +63,9 @@ const Navigation = () => {
 							backgroundColor: Colors.LightBlue
 						},
 						headerTintColor: '#fff',
+						headerTitleStyle: {
+							fontFamily: Fonts.Bold
+						},
 						headerRight: () => <HeaderCart />
 					})}
 				/>
@@ -77,6 +79,9 @@ const Navigation = () => {
 							backgroundColor: Colors.LightBlue
 						},
 						headerTintColor: '#fff',
+						headerTitleStyle: {
+							fontFamily: Fonts.Bold
+						},
 					}}
 				/>
 
@@ -89,6 +94,9 @@ const Navigation = () => {
 							backgroundColor: Colors.LightBlue
 						},
 						headerTintColor: '#fff',
+						headerTitleStyle: {
+							fontFamily: Fonts.Bold
+						},
 					}}
 				/>
 
@@ -101,6 +109,9 @@ const Navigation = () => {
 							backgroundColor: Colors.LightBlue
 						},
 						headerTintColor: '#fff',
+						headerTitleStyle: {
+							fontFamily: Fonts.Bold
+						},
 					}}
 				/>
 			</Stack.Navigator>

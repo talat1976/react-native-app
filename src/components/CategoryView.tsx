@@ -1,6 +1,7 @@
 import React, { FC } from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { Category } from '../models/Category'
+import { Fonts } from '../tools/fonts'
 
 type Props = {
     category: Category
@@ -44,6 +45,6 @@ const styles = StyleSheet.create({
         textAlign: "center",
         padding: 8,
         fontSize: 16,
-        fontWeight: "bold"
+        fontFamily: Fonts.SemiBold
     }
 })

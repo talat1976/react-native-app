@@ -6,6 +6,7 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { Colors } from '../tools/colors'
 import { Product } from '../models/Product'
+import { Fonts } from '../tools/fonts'
 
 type HomeScreenNavigationProp = CompositeNavigationProp<StackNavigationProp<RootStackParamList, Pages.Home>, any>
 
@@ -60,16 +61,13 @@ const styles = StyleSheet.create({
 	},
 	text: {
 		color: Colors.DarkBlue,
-		fontSize: 20,
-		fontWeight: "bold",
+		fontSize: 18,
+		fontFamily: Fonts.SemiBold
 	},
 	price: {
 		color: Colors.DarkBlue,
-		fontSize: 20,
-		fontWeight: "bold",
-	},
-	textColor: {
-		color: "#999"
+		fontSize: 18,
+		fontFamily: Fonts.Medium
 	},
 	image: {
 		flex: 1,

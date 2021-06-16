@@ -8,6 +8,7 @@ import Separator from '../components/Separator'
 import { Colors } from '../tools/colors'
 import { Pages, RootStackParamList } from '../tools/types'
 import { Feather } from '@expo/vector-icons'
+import { Fonts } from '../tools/fonts'
 
 type CheckoutForm = {
 	firstName: string
@@ -177,15 +178,14 @@ const styles = StyleSheet.create({
 		padding: 15
 	},
 	title: {
-		fontSize: 22,
+		fontSize: 18,
 		marginBottom: 15,
-		fontWeight: "bold",
+		fontFamily: Fonts.Bold,
 		color: Colors.DarkBlue,
 		textAlign: "center"
 	},
 	row: {
 		flexDirection: "row",
-
 	},
 	spacing: {
 		width: 15,

@@ -1,6 +1,7 @@
 import React, { FC } from 'react'
 import { GestureResponderEvent, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { Colors } from '../tools/colors'
+import { Fonts } from '../tools/fonts'
 
 type Props = {
 	title: string
@@ -37,7 +38,7 @@ const styles = StyleSheet.create({
 	text: {
 		color: "#fff",
 		fontSize: 16,
-		fontWeight: "bold"
+		fontFamily: Fonts.SemiBold,
 	},
 	leading: {
 		marginRight: 10

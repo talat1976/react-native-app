@@ -9,6 +9,7 @@ import CouponView from '../components/CouponView'
 import Separator from '../components/Separator'
 import { COUPONS } from '../context/data'
 import { Colors } from '../tools/colors'
+import { Fonts } from '../tools/fonts'
 
 type Props = StackScreenProps<RootStackParamList, Pages.Cart>
 
@@ -82,36 +83,27 @@ const styles = StyleSheet.create({
 	},
 	itemText: {
 		fontSize: 18,
-		fontWeight: "bold"
+		fontFamily: Fonts.SemiBold,
 	},
 	itemPrice: {
-		fontSize: 16,
-		color: Colors.DarkGray
+		fontSize: 14,
+		color: Colors.DarkGray,
+		fontFamily: Fonts.Medium,
 	},
 	itemPriceWithShipping: {
 		fontSize: 18,
 		color: Colors.DarkBlue,
-		fontWeight: "bold"
+		fontFamily: Fonts.SemiBold,
 	},
 	itemImg: {
 		height: 40,
 		width: 40,
 		marginRight: 20
 	},
-	itemQty: {
-		backgroundColor: "#333",
-		color: "#fff",
-		paddingBottom: 1,
-		paddingHorizontal: 6,
-		marginTop: 2,
-		marginLeft: 10,
-		fontSize: 16,
-		borderRadius: 5
-	},
 	total: {
 		fontSize: 20,
-		fontWeight: "bold",
 		marginBottom: 20,
-		textAlign: "right"
+		textAlign: "right",
+		fontFamily: Fonts.SemiBold,
 	}
 })

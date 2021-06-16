@@ -1,3 +1,4 @@
+// import { useFonts, Roboto_500Medium } from "@expo-google-fonts/roboto"
 import React, { useContext, useReducer } from "react"
 import { FC } from "react"
 import { Category } from "../models/Category"
@@ -5,6 +6,8 @@ import { Coupon } from "../models/Coupon"
 import { Product } from "../models/Product"
 import { CategoryType } from "../tools/types"
 import { CATEGORIES, PRODUCTS } from "./data"
+import AppLoading from 'expo-app-loading'
+import { useFonts, Montserrat_500Medium, Montserrat_600SemiBold, Montserrat_700Bold } from "@expo-google-fonts/montserrat"
 
 export enum ActionTypes {
 	addToCart = "addToCart",
@@ -40,16 +43,18 @@ type Reducer<S, A> = (prevState: S, action: A) => S
 
 const context = React.createContext<any>(undefined)
 
+const initState: State = {
+	categories: CATEGORIES,
+	products: PRODUCTS,
+	cart: [],
+	totalPrice: 0,
+	coupon: null
+}
+
 export const StoreProvider: FC = (props) => {
 	const { children } = props
 
-	const initState: State = {
-		categories: CATEGORIES,
-		products: PRODUCTS,
-		cart: [],
-		totalPrice: 0,
-		coupon: null
-	}
+	const [fontsLoaded] = useFonts({ Montserrat_500Medium, Montserrat_600SemiBold, Montserrat_700Bold })
 
 	const [state, dispatch] = useReducer<Reducer<State, Action>>((state: State, action: Action) => {
 		switch (action.type) {
@@ -97,6 +102,10 @@ export const StoreProvider: FC = (props) => {
 	}
 
 	const store = { state, dispatch, selector }
+
+	if(!fontsLoaded) {
+		return <AppLoading />
+	}
 
 	return (
 		<context.Provider value={store}>

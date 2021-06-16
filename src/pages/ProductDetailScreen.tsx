@@ -8,6 +8,7 @@ import { FontAwesome5 } from '@expo/vector-icons'
 import Detail from '../components/Detail'
 import { Colors } from '../tools/colors'
 import Separator from '../components/Separator'
+import { Fonts } from '../tools/fonts'
 
 type Props = StackScreenProps<RootStackParamList, Pages.ProductDetail>
 
@@ -73,15 +74,16 @@ const styles = StyleSheet.create({
 		height: 300
 	},
 	title: {
-		fontSize: 30,
-		fontWeight: "bold",
+		fontSize: 26,
+		fontFamily: Fonts.Bold,
 		marginBottom: 10,
 		color: Colors.DarkBlue
 	},
 	description: {
 		fontSize: 18,
 		marginBottom: 10,
-		color: Colors.DarkBlue
+		color: Colors.DarkBlue,
+		fontFamily: Fonts.Medium
 	},
 	detailContainer: {
 		flexDirection: "row",
@@ -90,13 +92,13 @@ const styles = StyleSheet.create({
 	},
 	total: {
 		fontSize: 22,
-		fontWeight: "bold",
+		fontFamily: Fonts.SemiBold,
 		marginBottom: 10,
 		color: Colors.DarkBlue
 	},
 	reviewsTitle: {
 		fontSize: 22,
-		fontWeight: "bold",
+		fontFamily: Fonts.Bold,
 		marginBottom: 10,
 		color: Colors.DarkBlue,
 	},
@@ -109,12 +111,13 @@ const styles = StyleSheet.create({
 	},
 	reviewItemName: {
 		color: Colors.DarkBlue,
-		fontSize: 16,
-		fontWeight: "bold",
+		fontSize: 14,
+		fontFamily: Fonts.SemiBold
 	},
 	reviewItemText: {
 		color: Colors.DarkGray,
-		fontSize: 18,
+		fontSize: 16,
+		fontFamily: Fonts.Medium
 	}
 })
 

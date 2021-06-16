@@ -1,6 +1,7 @@
 import React, { FC, useState } from 'react'
 import { StyleSheet, Text, View, TextInput } from 'react-native'
 import { Colors } from '../tools/colors'
+import { Fonts } from '../tools/fonts'
 import Button from './Button'
 
 type Props = {
@@ -28,10 +29,10 @@ export default CouponView
 
 const styles = StyleSheet.create({
 	text: {
-		fontSize: 16,
+		fontSize: 15,
 		marginBottom: 5,
 		color: Colors.DarkBlue,
-		fontWeight: "bold"
+		fontFamily: Fonts.SemiBold,
 	},
 	input: {
 		backgroundColor: "#fff",
@@ -40,6 +41,7 @@ const styles = StyleSheet.create({
 		borderColor: Colors.Gray,
 		borderWidth: 1,
 		borderRadius: 5,
-		marginBottom: 10
+		marginBottom: 10,
+		fontFamily: Fonts.Medium,
 	}
 })

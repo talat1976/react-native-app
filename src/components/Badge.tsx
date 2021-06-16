@@ -1,5 +1,6 @@
 import React, { FC } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
+import { Fonts } from '../tools/fonts'
 
 type Props = {
 	value: number
@@ -24,7 +25,7 @@ const styles = StyleSheet.create({
 	text: {
 		color: "#fff",
 		fontSize: 10,
-		fontWeight: "bold",
+		fontFamily: Fonts.SemiBold,
 		backgroundColor: "red",
 		borderRadius: 15,
 		height: 15,
